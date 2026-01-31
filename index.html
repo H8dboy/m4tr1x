@@ -6,87 +6,73 @@
     <title>OUT OF THE MATRIX</title>
     <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
     <style>
-        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; padding: 0; overflow-x: hidden; }
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         
-        /* Header Verde Matrix */
+        /* Header Neon */
         .header { 
-            background: #0f0; color: #000; padding: 15px 20px; 
-            display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 100; font-weight: bold;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-        }
-        
-        .title-brand { letter-spacing: 2px; font-size: 1.1em; text-transform: uppercase; }
-
-        /* Bottone Upload Nero */
-        .upload-btn { 
-            background: #000; color: #0f0; padding: 10px 18px; 
-            border: 2px solid #000; cursor: pointer; text-transform: uppercase;
-            font-family: 'Courier New', monospace; font-weight: bold;
-            transition: 0.3s;
-        }
-        
-        .upload-btn:hover { background: #222; border-color: #0f0; }
-
-        /* Feed Video */
-        .v-feed { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .post { width: 100%; max-width: 500px; background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 8px; overflow: hidden; }
-        
-        .video-placeholder { 
-            height: 400px; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; text-align: center;
-            border-bottom: 1px solid #1a1a1a;
+            background: #0f0; color: #000; padding: 15px; 
+            text-align: center; font-weight: bold; box-shadow: 0 0 20px #0f0; 
+            letter-spacing: 3px; position: sticky; top: 0; z-index: 100;
         }
 
-        .matrix-text { animation: blink 1.5s infinite; color: #0f0; font-size: 0.9em; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        /* Monitor Live */
+        .live-container { width: 95%; max-width: 800px; margin: 25px auto; border: 2px solid #0f0; background: #050505; box-shadow: 0 0 15px #050; }
+        .live-header { background: #0f0; color: #000; padding: 5px 12px; font-size: 0.8em; font-weight: bold; display: flex; justify-content: space-between; }
+        .live-video { width: 100%; aspect-ratio: 16/9; background: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        
+        .matrix-glow { color: #0f0; font-size: 1.1em; animation: pulse 2s infinite; text-align: center; line-height: 1.5; }
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
 
-        .controls { padding: 15px; display: flex; justify-content: space-around; background: #050505; }
-        .btn { background: none; border: 1px solid #0f0; color: #0f0; padding: 8px 15px; cursor: pointer; font-size: 0.75em; text-transform: uppercase; }
-        .btn:hover { background: #0f0; color: #000; }
+        /* Area Upload */
+        .upload-section { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; }
+        .upload-label { 
+            background: #000; color: #0f0; padding: 20px 40px; border: 2px solid #0f0; 
+            cursor: pointer; font-size: 1.2em; font-weight: bold; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .upload-label:hover { background: #0f0; color: #000; box-shadow: 0 0 30px #0f0; }
+        .security-footer { margin-top: 20px; color: #004400; font-size: 0.7em; text-transform: uppercase; }
 
-        /* Notifica Status */
-        #status-bar { 
+        /* Messaggio di successo */
+        #status-alert { 
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: #0f0; color: #000; padding: 10px 25px; 
-            font-weight: bold; display: none; z-index: 200; box-shadow: 0 0 15px #0f0;
+            background: #0f0; color: #000; padding: 12px 25px; 
+            font-weight: bold; display: none; z-index: 200; box-shadow: 0 0 20px #0f0;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <span class="title-brand">OUT OF THE MATRIX</span>
-        <button id="upload_widget" class="upload-btn">SEND EVIDENCE</button>
-    </div>
+    <div class="header">STATUS: SIGNAL ACTIVE</div>
 
-    <div id="status-bar">UPLOAD COMPLETED. DATA SECURED.</div>
-
-    <div class="v-feed">
-        <div class="post">
-            <div class="video-placeholder">
-                <p class="matrix-text">[ SEARCHING FOR LIVE FEED ]</p>
-                <small style="color: #444; margin-top: 10px;">MINNEAPOLIS SECTOR 01</small>
-            </div>
-            <div class="controls">
-                <button class="btn">VERIFY</button>
-                <button class="btn">LIKE</button>
-                <button class="btn">FAKE?</button>
+    <div class="live-container">
+        <div class="live-header">
+            <span>🔴 LIVE UPLINK</span>
+            <span>MN_SECTOR_01</span>
+        </div>
+        <div class="live-video">
+            <div class="matrix-glow">
+                [ BYPASSING FILTERS... ]<br>
+                <span style="font-size: 0.7em;">WAITING FOR UNFILTERED STREAM</span>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript">  
-        // Inserisci qui il tuo Cloud Name ottenuto dalla dashboard di Cloudinary
-        const cloudName = "IL_TUO_CLOUD_NAME"; 
-        const uploadPreset = "m4tr1x_preset";
+    <div class="upload-section">
+        <button id="upload_widget" class="upload-label">SEND EVIDENCE</button>
+        <div class="security-footer">Encrypted Connection to: dtcutghbu</div>
+    </div>
 
+    <div id="status-alert">EVIDENCE SECURED. FAMILY IS SAFE.</div>
+
+    <script type="text/javascript">  
+        // Configurazione Cloudinary con il tuo nick 'dtcutghbu'
         var myWidget = cloudinary.createUploadWidget({
-            cloudName: cloudName, 
-            uploadPreset: uploadPreset,
+            cloudName: 'dtcutghbu', 
+            uploadPreset: 'm4tr1x_preset',
             sources: ['local', 'camera'],
             clientAllowedFormats: ["mp4", "mov", "avi"],
-            maxFileSize: 100000000, // 100MB
+            maxFileSize: 100000000, // Max 100MB per file
             styles: {
                 palette: {
                     window: "#000000",
@@ -106,9 +92,9 @@
             }
         }, (error, result) => { 
             if (!error && result && result.event === "success") { 
-                const statusBar = document.getElementById('status-bar');
-                statusBar.style.display = 'block';
-                setTimeout(() => { statusBar.style.display = 'none'; }, 5000);
+                const alertBox = document.getElementById('status-alert');
+                alertBox.style.display = 'block';
+                setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
             }
         });
 
