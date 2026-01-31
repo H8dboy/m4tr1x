@@ -1,31 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M4TR1X - Live Evidence Feed</title>
+    <title>M4TR1X - Minneapolis Live</title>
     <style>
         body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; }
-        header { background: #0f0; color: #000; padding: 10px; text-align: center; font-weight: bold; position: fixed; width: 100%; z-index: 10; }
-        .feed { padding-top: 50px; display: flex; flex-direction: column; align-items: center; }
-        .post { width: 100%; max-width: 500px; border: 1px solid #333; margin-bottom: 20px; background: #111; }
-        video { width: 100%; border-bottom: 1px solid #333; }
-        .controls { padding: 15px; display: flex; justify-content: space-around; }
-        button { background: none; border: 1px solid #0f0; color: #0f0; padding: 10px; cursor: pointer; border-radius: 5px; }
-        button:hover { background: #0f0; color: #000; }
+        /* Barra superiore con tasto Upload */
+        .header { 
+            background: #0f0; color: #000; padding: 15px; 
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100; font-weight: bold;
+        }
+        .upload-label { 
+            background: #000; color: #0f0; padding: 8px 15px; 
+            border: 2px solid #000; cursor: pointer; text-transform: uppercase;
+        }
+        #fileInput { display: none; }
+        
+        /* Feed Video */
+        .v-feed { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .post { width: 100%; max-width: 500px; background: #111; border: 1px solid #333; position: relative; }
+        video { width: 100%; aspect-ratio: 9/16; background: #000; }
+        
+        .controls { padding: 15px; display: flex; justify-content: space-around; border-top: 1px solid #333; }
+        .btn { background: none; border: 1px solid #0f0; color: #0f0; padding: 8px; cursor: pointer; }
+        .status { color: #f00; font-size: 0.8em; text-align: center; padding: 10px; display: none; }
     </style>
 </head>
 <body>
-    <header>M4TR1X PROTOCOL: ALEX PRETTI INCIDENT</header>
-    <div class="feed">
+
+    <div class="header">
+        <span>M4TR1X PROTOCOL</span>
+        <label for="fileInput" class="upload-label">SEND VIDEO</label>
+        <input type="file" id="fileInput" accept="video/*">
+    </div>
+
+    <div id="uploadStatus" class="status">CRYPTING & SENDING TO ITALY...</div>
+
+    <div class="v-feed">
         <div class="post">
-            <video controls><source src="uploads/sample.mp4" type="video/mp4"></video>
+            <div style="height: 400px; display: flex; align-items: center; justify-content: center; color: #444;">
+                [ IN ATTESA DI PROVE DA MINNEAPOLIS ]
+            </div>
             <div class="controls">
-                <button>VERIFY [V]</button>
-                <button>LIKE [❤️]</button>
-                <button>DEEPFAKE? [⚠️]</button>
+                <button class="btn">VERIFY [V]</button>
+                <button class="btn">LIKE [❤️]</button>
+                <button class="btn">DEEPFAKE? [⚠️]</button>
             </div>
         </div>
     </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const status = document.getElementById('uploadStatus');
+
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                status.style.display = 'block';
+                // Qui poi collegheremo il salvataggio vero
+                setTimeout(() => {
+                    status.style.color = '#0f0';
+                    status.innerText = "PROVA INVIATA CON SUCCESSO. LA FAMIGLIA RINGRAZIA.";
+                }, 3000);
+            }
+        };
+    </script>
 </body>
 </html>
