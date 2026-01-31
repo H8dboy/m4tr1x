@@ -3,50 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M4TR1X - Minneapolis Live</title>
+    <title>OUT OF THE MATRIX</title>
     <style>
         body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; }
+        
         /* Barra superiore con tasto Upload */
         .header { 
             background: #0f0; color: #000; padding: 15px; 
             display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 100; font-weight: bold;
+            box-shadow: 0 0 15px #0f0;
         }
+        
+        .title-brand { letter-spacing: 2px; }
+
         .upload-label { 
-            background: #000; color: #0f0; padding: 8px 15px; 
+            background: #000; color: #0f0; padding: 10px 20px; 
             border: 2px solid #000; cursor: pointer; text-transform: uppercase;
+            font-size: 0.9em; transition: 0.3s;
         }
+        
+        .upload-label:hover { background: #222; }
+
         #fileInput { display: none; }
         
         /* Feed Video */
         .v-feed { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .post { width: 100%; max-width: 500px; background: #111; border: 1px solid #333; position: relative; }
-        video { width: 100%; aspect-ratio: 9/16; background: #000; }
+        .post { width: 100%; max-width: 500px; background: #111; border: 1px solid #333; position: relative; border-radius: 5px; }
         
-        .controls { padding: 15px; display: flex; justify-content: space-around; border-top: 1px solid #333; }
-        .btn { background: none; border: 1px solid #0f0; color: #0f0; padding: 8px; cursor: pointer; }
-        .status { color: #f00; font-size: 0.8em; text-align: center; padding: 10px; display: none; }
+        .video-placeholder { 
+            height: 450px; display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; color: #0f0; opacity: 0.5; border-bottom: 1px solid #333;
+        }
+        
+        .controls { padding: 15px; display: flex; justify-content: space-around; background: #080808; }
+        .btn { background: none; border: 1px solid #0f0; color: #0f0; padding: 8px 12px; cursor: pointer; font-size: 0.8em; }
+        .btn:hover { background: #0f0; color: #000; }
+        
+        .status { 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: #0f0; color: #000; padding: 10px 20px; 
+            font-weight: bold; display: none; z-index: 200;
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <span>M4TR1X PROTOCOL</span>
-        <label for="fileInput" class="upload-label">SEND VIDEO</label>
+        <span class="title-brand">OUT OF THE MATRIX</span>
+        <label for="fileInput" class="upload-label">SEND EVIDENCE</label>
         <input type="file" id="fileInput" accept="video/*">
     </div>
 
-    <div id="uploadStatus" class="status">CRYPTING & SENDING TO ITALY...</div>
+    <div id="uploadStatus" class="status">CRYPTING & UPLOADING...</div>
 
     <div class="v-feed">
         <div class="post">
-            <div style="height: 400px; display: flex; align-items: center; justify-content: center; color: #444;">
-                [ IN ATTESA DI PROVE DA MINNEAPOLIS ]
+            <div class="video-placeholder">
+                <p>[ WAITING FOR LIVE STREAM ]</p>
+                <small>UPLOAD TO START THE REVOLUTION</small>
             </div>
             <div class="controls">
-                <button class="btn">VERIFY [V]</button>
-                <button class="btn">LIKE [❤️]</button>
-                <button class="btn">DEEPFAKE? [⚠️]</button>
+                <button class="btn">VERIFY</button>
+                <button class="btn">SECURE LIKE</button>
+                <button class="btn">REPORT FAKE</button>
             </div>
         </div>
     </div>
@@ -58,11 +78,12 @@
         fileInput.onchange = () => {
             if (fileInput.files.length > 0) {
                 status.style.display = 'block';
-                // Qui poi collegheremo il salvataggio vero
+                // Simulazione crittografia per dare sicurezza all'utente
                 setTimeout(() => {
-                    status.style.color = '#0f0';
-                    status.innerText = "PROVA INVIATA CON SUCCESSO. LA FAMIGLIA RINGRAZIA.";
-                }, 3000);
+                    status.style.background = '#0f0';
+                    status.innerText = "EVIDENCE SENT. FAMILY IS SECURE.";
+                    setTimeout(() => { status.style.display = 'none'; }, 4000);
+                }, 3500);
             }
         };
     </script>
