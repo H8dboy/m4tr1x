@@ -31,7 +31,7 @@
             text-transform: uppercase; letter-spacing: 2px;
         }
         .upload-label:hover { background: #0f0; color: #000; box-shadow: 0 0 30px #0f0; }
-        .security-footer { margin-top: 20px; color: #004400; font-size: 0.7em; text-transform: uppercase; }
+        .security-footer { margin-top: 20px; color: #004400; font-size: 0.7em; text-transform: uppercase; text-align: center; }
 
         /* Messaggio di successo */
         #status-alert { 
@@ -60,19 +60,22 @@
 
     <div class="upload-section">
         <button id="upload_widget" class="upload-label">SEND EVIDENCE</button>
-        <div class="security-footer">Encrypted Connection to: dtcutghbu</div>
+        <div class="security-footer">
+            Encrypted Connection: ACTIVE<br>
+            Server Node: dtcutghbu
+        </div>
     </div>
 
     <div id="status-alert">EVIDENCE SECURED. FAMILY IS SAFE.</div>
 
     <script type="text/javascript">  
-        // Configurazione Cloudinary con il tuo nick 'dtcutghbu'
+        // Collegamento al tuo Cloud Name: dtcutghbu
         var myWidget = cloudinary.createUploadWidget({
             cloudName: 'dtcutghbu', 
             uploadPreset: 'm4tr1x_preset',
             sources: ['local', 'camera'],
             clientAllowedFormats: ["mp4", "mov", "avi"],
-            maxFileSize: 100000000, // Max 100MB per file
+            maxFileSize: 100000000, 
             styles: {
                 palette: {
                     window: "#000000",
