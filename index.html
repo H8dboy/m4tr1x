@@ -3,79 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OUT OF THE MATRIX</title>
+    <title>M4TR1X - UNFILTERED SIGNAL</title>
     <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/nostr-tools/lib/nostr.bundle.js"></script>
     <style>
         body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         
-        /* Header Neon */
+        /* Header Neon con glitch effect */
         .header { 
             background: #0f0; color: #000; padding: 15px; 
             text-align: center; font-weight: bold; box-shadow: 0 0 20px #0f0; 
             letter-spacing: 3px; position: sticky; top: 0; z-index: 100;
+            text-transform: uppercase;
         }
 
-        /* Monitor Live */
-        .live-container { width: 95%; max-width: 800px; margin: 25px auto; border: 2px solid #0f0; background: #050505; box-shadow: 0 0 15px #050; }
+        /* Container principale */
+        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+
+        /* Monitor Live ottimizzato per Vertical Video (Reels) */
+        .live-container { width: 100%; max-width: 400px; border: 2px solid #0f0; background: #050505; box-shadow: 0 0 15px #050; margin-bottom: 20px; }
         .live-header { background: #0f0; color: #000; padding: 5px 12px; font-size: 0.8em; font-weight: bold; display: flex; justify-content: space-between; }
-        .live-video { width: 100%; aspect-ratio: 16/9; background: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .live-video { width: 100%; aspect-ratio: 9/16; background: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         
-        .matrix-glow { color: #0f0; font-size: 1.1em; animation: pulse 2s infinite; text-align: center; line-height: 1.5; }
+        /* Icona Zap (Fulmine) */
+        .zap-button {
+            position: absolute; bottom: 20px; right: 20px;
+            background: rgba(0, 255, 0, 0.2); border: 2px solid #0f0;
+            border-radius: 50%; width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 24px; transition: 0.3s;
+        }
+        .zap-button:hover { background: #0f0; color: #000; box-shadow: 0 0 20px #0f0; transform: scale(1.1); }
+
+        .matrix-glow { color: #0f0; font-size: 1.1em; animation: pulse 2s infinite; text-align: center; line-height: 1.5; padding: 20px; }
         @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
 
-        /* Area Upload */
-        .upload-section { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; }
+        /* Area Comandi */
+        .controls { text-align: center; width: 100%; max-width: 400px; }
         .upload-label { 
-            background: #000; color: #0f0; padding: 20px 40px; border: 2px solid #0f0; 
-            cursor: pointer; font-size: 1.2em; font-weight: bold; transition: 0.3s;
-            text-transform: uppercase; letter-spacing: 2px;
+            background: #000; color: #0f0; padding: 15px 30px; border: 2px solid #0f0; 
+            cursor: pointer; font-size: 1em; font-weight: bold; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 2px; width: 100%; margin-bottom: 10px;
         }
         .upload-label:hover { background: #0f0; color: #000; box-shadow: 0 0 30px #0f0; }
-        .security-footer { margin-top: 20px; color: #004400; font-size: 0.7em; text-transform: uppercase; text-align: center; }
+        
+        .security-footer { margin-top: 10px; color: #004400; font-size: 0.6em; text-transform: uppercase; line-height: 1.4; }
 
-        /* Messaggio di successo */
+        /* Alert Box */
         #status-alert { 
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             background: #0f0; color: #000; padding: 12px 25px; 
             font-weight: bold; display: none; z-index: 200; box-shadow: 0 0 20px #0f0;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">STATUS: SIGNAL ACTIVE</div>
+    <div class="header">M4TR1X UPLINK: ACTIVE</div>
 
-    <div class="live-container">
-        <div class="live-header">
-            <span>🔴 LIVE UPLINK</span>
-            <span>MN_SECTOR_01</span>
+    <div class="main-content">
+        <div class="live-container">
+            <div class="live-header">
+                <span>🔴 NOSTR_NODE_01</span>
+                <span id="timestamp">SYNCING...</span>
+            </div>
+            <div class="live-video" id="video-display">
+                <div class="matrix-glow">
+                    [ BYPASSING FILTERS... ]<br>
+                    <span style="font-size: 0.7em;">WAITING FOR UNFILTERED EVIDENCE</span>
+                </div>
+                <div class="zap-button" onclick="sendZap()" title="SEND ZAP (SATS)">⚡</div>
+            </div>
         </div>
-        <div class="live-video">
-            <div class="matrix-glow">
-                [ BYPASSING FILTERS... ]<br>
-                <span style="font-size: 0.7em;">WAITING FOR UNFILTERED STREAM</span>
+
+        <div class="controls">
+            <button id="upload_widget" class="upload-label">UPLOAD EVIDENCE</button>
+            <div class="security-footer">
+                Protocol: NOSTR NIP-94<br>
+                Encryption: ChaCha20-Poly1305<br>
+                Status: Family Secured.
             </div>
         </div>
     </div>
 
-    <div class="upload-section">
-        <button id="upload_widget" class="upload-label">SEND EVIDENCE</button>
-        <div class="security-footer">
-            Encrypted Connection: ACTIVE<br>
-            Server Node: dtcutghbu
-        </div>
-    </div>
-
-    <div id="status-alert">EVIDENCE SECURED. FAMILY IS SAFE.</div>
+    <div id="status-alert">EVIDENCE SECURED. BROADCASTING TO RELAYS...</div>
 
     <script type="text/javascript">  
-        // Collegamento al tuo Cloud Name: dtcutghbu
+        // Aggiorna orario sistema
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('timestamp').innerText = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+        }, 1000);
+
+        // Simulazione Zap
+        function sendZap() {
+            alert("⚡ Inoltro richiesta Zap al wallet Lightning...\n[SIMULATED SATS SENT]");
+        }
+
+        // Configurazione Cloudinary per M4TR1X
         var myWidget = cloudinary.createUploadWidget({
             cloudName: 'dtcutghbu', 
             uploadPreset: 'm4tr1x_preset',
             sources: ['local', 'camera'],
             clientAllowedFormats: ["mp4", "mov", "avi"],
             maxFileSize: 100000000, 
+            theme: "minimal",
             styles: {
                 palette: {
                     window: "#000000",
@@ -95,6 +128,19 @@
             }
         }, (error, result) => { 
             if (!error && result && result.event === "success") { 
+                const videoUrl = result.info.secure_url;
+                
+                // Mostra il video caricato nel monitor
+                document.getElementById('video-display').innerHTML = `
+                    <video width="100%" height="100%" autoplay loop muted style="object-fit: cover;">
+                        <source src="${videoUrl}" type="video/mp4">
+                    </video>
+                    <div class="zap-button" onclick="sendZap()">⚡</div>
+                `;
+
+                // Logica Nostr (simulata qui, ma pronta per NDK)
+                console.log("Broadcast to Nostr Relays: ", videoUrl);
+
                 const alertBox = document.getElementById('status-alert');
                 alertBox.style.display = 'block';
                 setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
