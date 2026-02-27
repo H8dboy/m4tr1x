@@ -765,13 +765,11 @@ function generateNewKeys() {
                 nsec     = NT.nip19 ? NT.nip19.nsecEncode(sk)    : privkey;
                 npub     = NT.nip19 ? NT.nip19.npubEncode(pubkey) : pubkey;
             } else {
-                // Pure browser crypto fallback
-                const arr = new Uint8Array(32);
-                crypto.getRandomValues(arr);
-                privkey = Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join('');
-                pubkey  = privkey;
-                nsec    = privkey;
-                npub    = '(salva la chiave privata)';
+// nostr-tools non disponibile
+                                showToast('ERRORE: libreria nostr-tools non caricata. Ricarica la pagina.');
+                                btn.textContent = '⚡ GENERATE KEYPAIR';
+                                btn.disabled = false;
+                                return;
             }
 
             auth.privkey = privkey;
@@ -856,8 +854,7 @@ async function publishAndEnter() {
             signed = await window.nostr.signEvent(event);
         } else if (auth.privkey && window.NostrTools) {
             event.id = window.NostrTools.getEventHash(event);
-            event.sig = window.NostrTools.signEvent(event, auth.privkey);
-            signed = event;
+            signed = window.NostrTools.signEvent(event, auth.privkey);
         } else {
             // Skip signing, just enter
             skipProfile();
