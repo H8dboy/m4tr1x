@@ -614,11 +614,18 @@ const RELAYS = [
 // ─── INIT ─────────────────────────────────────────────────
 window.addEventListener('load', () => {
     // Check if already logged in
-    const stored = sessionStorage.getItem('m4tr1x_pubkey');
-    if (stored) {
-        enterNetwork(stored, false);
-        return;
-    }
+    const stored = localStorage.getItem('m4tr1x_pubkey');
+        if (stored) {
+            auth.pubkey = stored;
+            auth.method = localStorage.getItem('m4tr1x_method') || 'unknown';
+            const storedPriv = localStorage.getItem('m4tr1x_privkey');
+            if (storedPriv) {
+                auth.privkey = storedPriv;
+                auth.privkeyBytes = Uint8Array.from(storedPriv.match(/.{2}/g).map(b=>parseInt(b,16)));
+            }
+            enterNetwork(stored, false);
+            return;
+        }
 
     // Check extension
     setTimeout(() => {
@@ -657,8 +664,8 @@ async function connectExtension() {
         auth.method = 'extension';
         document.getElementById('auth-log').textContent = '[ OK ] identity verified';
         document.getElementById('auth-log').style.color = 'var(--green-dim)';
-        sessionStorage.setItem('m4tr1x_pubkey', pubkey);
-        sessionStorage.setItem('m4tr1x_method', 'extension');
+        localStorage.setItem('m4tr1x_pubkey', pubkey);
+        localStorage.setItem('m4tr1x_method', 'extension');
         enterNetwork(pubkey, true);
     } catch(e) {
         showToast('ACCESS DENIED BY EXTENSION');
@@ -674,19 +681,24 @@ async function importKey() {
     const raw = document.getElementById('nsec-import').value.trim();
     if (!raw) { showToast('ENTER YOUR PRIVATE KEY'); return; }
 
-    let privkey;
+    let privkeyBytes; // Uint8Array (for crypto ops in v2)
+    let privkeyHex;   // hex string (for storage)
     try {
         const NT = getNT();
         if (raw.startsWith('nsec1')) {
             if (NT && NT.nip19) {
                 const decoded = NT.nip19.decode(raw);
-                privkey = typeof decoded.data === 'string' ? decoded.data : Array.from(decoded.data).map(b=>b.toString(16).padStart(2,'0')).join('');
-            } else {
-                showToast('NOSTR-TOOLS NOT LOADED — USE HEX KEY');
-                return;
-            }
+                if (decoded.data instanceof Uint8Array) {
+                    privkeyBytes = decoded.data;
+                    privkeyHex = Array.from(privkeyBytes).map(b=>b.toString(16).padStart(2,'0')).join('');
+                } else {
+                    privkeyHex = decoded.data;
+                    privkeyBytes = Uint8Array.from(privkeyHex.match(/.{2}/g).map(b=>parseInt(b,16)));
+                }
+            } else { showToast('NOSTR-TOOLS NOT LOADED — USE HEX KEY'); return; }
         } else if (/^[0-9a-fA-F]{64}$/.test(raw)) {
-            privkey = raw.toLowerCase();
+            privkeyHex = raw.toLowerCase();
+            privkeyBytes = Uint8Array.from(privkeyHex.match(/.{2}/g).map(b=>parseInt(b,16)));
         } else {
             showToast('INVALID KEY FORMAT');
             return;
@@ -694,18 +706,18 @@ async function importKey() {
 
         let pubkey;
         if (NT && NT.getPublicKey) {
-            pubkey = NT.getPublicKey(privkey);
-        } else {
-            showToast('CANNOT DERIVE PUBKEY — NOSTR-TOOLS NOT LOADED');
-            return;
-        }
+            // v2: getPublicKey needs Uint8Array; v1: accepts hex string
+            try { pubkey = NT.getPublicKey(privkeyBytes); }
+            catch(e) { pubkey = NT.getPublicKey(privkeyHex); }
+        } else { showToast('CANNOT DERIVE PUBKEY — NOSTR-TOOLS NOT LOADED'); return; }
 
-        auth.privkey = privkey;
+        auth.privkey = privkeyHex;
+        auth.privkeyBytes = privkeyBytes;
         auth.pubkey = pubkey;
         auth.method = 'imported';
-        sessionStorage.setItem('m4tr1x_pubkey', pubkey);
-        sessionStorage.setItem('m4tr1x_privkey', privkey);
-        sessionStorage.setItem('m4tr1x_method', 'imported');
+        localStorage.setItem('m4tr1x_pubkey', pubkey);
+        localStorage.setItem('m4tr1x_privkey', privkeyHex);
+        localStorage.setItem('m4tr1x_method', 'imported');
         enterNetwork(pubkey, true);
     } catch(e) {
         showToast('KEY ERROR: ' + e.message);
@@ -762,6 +774,7 @@ function generateNewKeys() {
                 const sk = NT.generateSecretKey();
                 privkey  = Array.from(sk).map(b=>b.toString(16).padStart(2,'0')).join('');
                 pubkey   = NT.getPublicKey(sk);
+                    auth.privkeyBytes = sk; // keep Uint8Array for finalizeEvent
                 nsec     = NT.nip19 ? NT.nip19.nsecEncode(sk)    : privkey;
                 npub     = NT.nip19 ? NT.nip19.npubEncode(pubkey) : pubkey;
             } else {
@@ -783,9 +796,9 @@ function generateNewKeys() {
             document.getElementById('keys-output').style.display = 'block';
             btn.textContent = '✅ KEYPAIR GENERATED';
 
-            sessionStorage.setItem('m4tr1x_pubkey',  pubkey);
-            sessionStorage.setItem('m4tr1x_privkey', privkey);
-            sessionStorage.setItem('m4tr1x_method',  'generated');
+            localStorage.setItem('m4tr1x_pubkey',  pubkey);
+            localStorage.setItem('m4tr1x_privkey', privkey);
+            localStorage.setItem('m4tr1x_method',  'generated');
 
         } catch(e) {
             showToast('GENERATION ERROR: ' + e.message);
@@ -853,8 +866,18 @@ async function publishAndEnter() {
         if (auth.method === 'extension') {
             signed = await window.nostr.signEvent(event);
         } else if (auth.privkey && window.NostrTools) {
-            event.id = window.NostrTools.getEventHash(event);
-            signed = window.NostrTools.signEvent(event, auth.privkey);
+                const NT = window.NostrTools;
+                event.id = NT.getEventHash(event);
+                // Support both v1 (signEvent) and v2 (finalizeEvent)
+                if (NT.finalizeEvent) {
+                    const sk = auth.privkeyBytes || Uint8Array.from(auth.privkey.match(/.{2}/g).map(b=>parseInt(b,16)));
+                    signed = NT.finalizeEvent(event, sk);
+                } else if (NT.signEvent) {
+                    signed = NT.signEvent(event, auth.privkey);
+                } else {
+                    showToast('SIGN ERROR: no signing method available');
+                    return;
+                }
         } else {
             // Skip signing, just enter
             skipProfile();
@@ -871,7 +894,7 @@ async function publishAndEnter() {
             });
         }, 1000);
 
-        sessionStorage.setItem('m4tr1x_profile', JSON.stringify(profile));
+        localStorage.setItem('m4tr1x_profile', JSON.stringify(profile));
         showToast('PROFILE PUBLISHED TO NOSTR');
         setTimeout(() => enterNetwork(auth.pubkey, true), 800);
     } catch(e) {
