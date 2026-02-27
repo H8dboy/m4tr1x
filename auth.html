@@ -676,11 +676,11 @@ async function importKey() {
 
     let privkey;
     try {
+        const NT = getNT();
         if (raw.startsWith('nsec1')) {
-            // bech32 decode via nostr-tools
-            if (window.NostrTools) {
-                const decoded = window.NostrTools.nip19.decode(raw);
-                privkey = decoded.data;
+            if (NT && NT.nip19) {
+                const decoded = NT.nip19.decode(raw);
+                privkey = typeof decoded.data === 'string' ? decoded.data : Array.from(decoded.data).map(b=>b.toString(16).padStart(2,'0')).join('');
             } else {
                 showToast('NOSTR-TOOLS NOT LOADED — USE HEX KEY');
                 return;
@@ -693,10 +693,10 @@ async function importKey() {
         }
 
         let pubkey;
-        if (window.NostrTools) {
-            pubkey = window.NostrTools.getPublicKey(privkey);
+        if (NT && NT.getPublicKey) {
+            pubkey = NT.getPublicKey(privkey);
         } else {
-            showToast('CANNOT DERIVE PUBKEY WITHOUT NOSTR-TOOLS');
+            showToast('CANNOT DERIVE PUBKEY — NOSTR-TOOLS NOT LOADED');
             return;
         }
 
@@ -737,6 +737,10 @@ function goSignupStep(n) {
     if (current) { current.style.display = 'block'; current.classList.add('step-content'); }
 }
 
+function getNT() {
+    return window.NostrTools || window.nostrTools || window.nostr_tools || null;
+}
+
 function generateNewKeys() {
     const btn = document.getElementById('gen-btn');
     btn.textContent = '[ GENERATING... ]';
@@ -745,38 +749,45 @@ function generateNewKeys() {
     setTimeout(() => {
         try {
             let privkey, pubkey, nsec, npub;
+            const NT = getNT();
 
-            if (window.NostrTools) {
-                privkey = window.NostrTools.generatePrivateKey();
-                pubkey = window.NostrTools.getPublicKey(privkey);
-                nsec = window.NostrTools.nip19.nsecEncode(privkey);
-                npub = window.NostrTools.nip19.npubEncode(pubkey);
+            if (NT && NT.generatePrivateKey) {
+                // nostr-tools v1.x
+                privkey = NT.generatePrivateKey();
+                pubkey  = NT.getPublicKey(privkey);
+                nsec    = NT.nip19 ? NT.nip19.nsecEncode(privkey) : privkey;
+                npub    = NT.nip19 ? NT.nip19.npubEncode(pubkey)  : pubkey;
+            } else if (NT && NT.generateSecretKey) {
+                // nostr-tools v2.x
+                const sk = NT.generateSecretKey();
+                privkey  = Array.from(sk).map(b=>b.toString(16).padStart(2,'0')).join('');
+                pubkey   = NT.getPublicKey(sk);
+                nsec     = NT.nip19 ? NT.nip19.nsecEncode(sk)    : privkey;
+                npub     = NT.nip19 ? NT.nip19.npubEncode(pubkey) : pubkey;
             } else {
-                // Fallback
+                // Pure browser crypto fallback
                 const arr = new Uint8Array(32);
                 crypto.getRandomValues(arr);
-                privkey = Array.from(arr).map(b => b.toString(16).padStart(2,'0')).join('');
-                pubkey = privkey; // Can't derive without library
-                nsec = 'nsec_raw:' + privkey;
-                npub = 'npub_raw:' + privkey;
+                privkey = Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join('');
+                pubkey  = privkey;
+                nsec    = privkey;
+                npub    = '(salva la chiave privata)';
             }
 
             auth.privkey = privkey;
-            auth.pubkey = pubkey;
-            auth.method = 'generated';
+            auth.pubkey  = pubkey;
+            auth.method  = 'generated';
 
-            document.getElementById('npub-out').textContent = npub;
-            // Store full nsec in data attribute for copy
             const nsecEl = document.getElementById('nsec-out');
-            nsecEl.textContent = nsec;
+            nsecEl.textContent  = nsec;
             nsecEl.dataset.full = nsec;
-
+            document.getElementById('npub-out').textContent = npub;
             document.getElementById('keys-output').style.display = 'block';
             btn.textContent = '✅ KEYPAIR GENERATED';
 
-            sessionStorage.setItem('m4tr1x_pubkey', pubkey);
+            sessionStorage.setItem('m4tr1x_pubkey',  pubkey);
             sessionStorage.setItem('m4tr1x_privkey', privkey);
-            sessionStorage.setItem('m4tr1x_method', 'generated');
+            sessionStorage.setItem('m4tr1x_method',  'generated');
 
         } catch(e) {
             showToast('GENERATION ERROR: ' + e.message);
@@ -880,9 +891,9 @@ function enterNetwork(pubkey, animate) {
     if (animate) {
         const s = document.getElementById('success-screen');
         s.classList.add('show');
-        setTimeout(() => { window.location.href = 'index.html'; }, 2200);
+        setTimeout(() => { window.location.href = './index.html'; }, 2200);
     } else {
-        window.location.href = 'index.html';
+        window.location.href = './index.html';
     }
 }
 
