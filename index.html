@@ -271,39 +271,39 @@
   <div id="topbar">
     <div class="logo">M4TR1X</div>
     <div id="topbar-right">
-      <button class="top-btn" onclick="toast('EXPLORE \u2014 COMING SOON')">\u{1F50D}</button>
-      <div id="user-avatar-top">\u{1F464}</div>
+      <button class="top-btn" onclick="toast('EXPLORE — COMING SOON')">🔍</button>
+      <div id="user-avatar-top">👤</div>
     </div>
   </div>
   <div id="section-tabs">
-    <button class="sec-tab active" onclick="switchSec('signal')">\u{1F4E1}</button>
-    <button class="sec-tab film-tab" onclick="switchSec('film')">\u{1F3AC}</button>
-    <button class="sec-tab music-tab" onclick="switchSec('music')">\u{1F3B5}</button>
-    <button class="sec-tab forum-tab" onclick="switchSec('forum')">\u{1F3DB}\uFE0F</button>
-    <button class="sec-tab shop-tab" onclick="switchSec('shop')">\u{1F6CD}\uFE0F</button>
-    <button class="sec-tab dm-tab" onclick="switchSec('dm')">\u{1F4AC}</button>
+    <button class="sec-tab active" onclick="switchSec('signal')">📡</button>
+    <button class="sec-tab film-tab" onclick="switchSec('film')">🎬</button>
+    <button class="sec-tab music-tab" onclick="switchSec('music')">🎵</button>
+    <button class="sec-tab forum-tab" onclick="switchSec('forum')">🏛️</button>
+    <button class="sec-tab shop-tab" onclick="switchSec('shop')">🛍️</button>
+    <button class="sec-tab dm-tab" onclick="switchSec('dm')">💬</button>
   </div>
   <div class="section-banner" id="banner-film">
-    <span class="banner-icon">\u{1F3AC}</span>
+    <span class="banner-icon">🎬</span>
     <div class="banner-text"><strong>INDIE FILM CHANNEL</strong>Streaming via PeerTube Federation <span class="integration-status live">PEERTUBE LIVE</span></div>
   </div>
   <div class="section-banner" id="banner-music">
-    <span class="banner-icon">\u{1F3B5}</span>
+    <span class="banner-icon">🎵</span>
     <div class="banner-text"><strong>UNDERGROUND MUSIC</strong>Streaming via Funkwhale Federation <span class="integration-status live">FUNKWHALE LIVE</span></div>
   </div>
   <div class="section-banner" id="banner-forum">
-    <span class="banner-icon">\u{1F3DB}\uFE0F</span>
+    <span class="banner-icon">🏛️</span>
     <div class="banner-text"><strong>FORUM</strong>Federated via Mastodon ActivityPub <span class="integration-status live">MASTODON LIVE</span></div>
   </div>
   <div class="section-banner" id="banner-shop">
-    <span class="banner-icon">\u{1F6CD}\uFE0F</span>
-    <div class="banner-text"><strong>MARKETPLACE</strong>Buy & sell with M4TR1X tokens \u00B7 Decentralized commerce</div>
+    <span class="banner-icon">🛍️</span>
+    <div class="banner-text"><strong>MARKETPLACE</strong>Buy & sell with M4TR1X tokens · Decentralized commerce</div>
   </div>
   <div class="section-banner" id="banner-dm">
-    <span class="banner-icon">\u{1F4AC}</span>
+    <span class="banner-icon">💬</span>
     <div class="banner-text"><strong>PRIVATE MESSAGES</strong>Double Ratchet E2E Encryption <span class="integration-status live">SIGNAL PROTOCOL LIVE</span></div>
   </div>
-  <button id="mute-btn" onclick="toggleMute()">\u{1F507}</button>
+  <button id="mute-btn" onclick="toggleMute()">🔇</button>
   <div id="feed-wrap">
     <div class="section-feed active" id="feed-signal"><div class="slide-placeholder"><div class="ph-text">[ CONNECTING TO RELAYS... ]</div></div></div>
     <div class="section-feed" id="feed-film"><div class="slide-placeholder"><div class="ph-text">[ CONNECTING TO PEERTUBE INSTANCES... ]</div></div></div>
@@ -312,55 +312,55 @@
     </div>
     <div class="section-feed" id="feed-forum">
       <div class="forum-container" id="forum-container"><div class="slide-placeholder"><div class="ph-text">[ CONNECTING TO MASTODON INSTANCES... ]</div></div></div>
-      <div class="forum-powered">FEDERATED VIA MASTODON ACTIVITYPUB \u00B7 REAL DECENTRALIZED DISCUSSIONS</div>
+      <div class="forum-powered">FEDERATED VIA MASTODON ACTIVITYPUB · REAL DECENTRALIZED DISCUSSIONS</div>
     </div>
     <div class="section-feed" id="feed-shop">
       <div class="shop-container" id="shop-container">
         <div class="shop-header">
-          <div class="shop-balance">\u{1F4B0} M4TR1X: <span class="shop-balance-amount" id="token-balance">0</span></div>
+          <div class="shop-balance">💰 M4TR1X: <span class="shop-balance-amount" id="token-balance">0</span></div>
           <button class="shop-buy-tokens" onclick="openTokenModal()">BUY TOKENS</button>
         </div>
         <div class="shop-grid" id="shop-grid"><div class="slide-placeholder" style="grid-column:span 2"><div class="ph-text">[ LOADING MARKETPLACE... ]</div></div></div>
-        <div class="shop-powered">DECENTRALIZED MARKETPLACE \u00B7 M4TR1X TOKEN ECONOMY</div>
+        <div class="shop-powered">DECENTRALIZED MARKETPLACE · M4TR1X TOKEN ECONOMY</div>
       </div>
     </div>
     <div class="section-feed" id="feed-dm">
       <div class="dm-container" id="dm-container">
-        <div class="dm-encryption-badge"><span class="lock-icon">\u{1F512}</span> SIGNAL PROTOCOL ACTIVE \u2014 Double Ratchet + X3DH + AES-256-GCM \u2014 Messages are end-to-end encrypted</div>
+        <div class="dm-encryption-badge"><span class="lock-icon">🔒</span> SIGNAL PROTOCOL ACTIVE — Double Ratchet + X3DH + AES-256-GCM — Messages are end-to-end encrypted</div>
         <div class="dm-list" id="dm-list"><div class="slide-placeholder"><div class="ph-text">[ INITIALIZING SIGNAL PROTOCOL... ]</div></div></div>
-        <div class="dm-powered">REAL E2E ENCRYPTION \u00B7 SIGNAL PROTOCOL (DOUBLE RATCHET) \u00B7 NO PHONE NUMBER REQUIRED</div>
+        <div class="dm-powered">REAL E2E ENCRYPTION · SIGNAL PROTOCOL (DOUBLE RATCHET) · NO PHONE NUMBER REQUIRED</div>
       </div>
     </div>
   </div>
   <div class="powered-strip">
     <span>INTEGRATED WITH</span>
-    <a href="https://nostr.com" target="_blank">NOSTR</a> \u00B7
-    <a href="https://joinmastodon.org" target="_blank">MASTODON</a> \u00B7
-    <a href="https://joinpeertube.org" target="_blank">PEERTUBE</a> \u00B7
-    <a href="https://funkwhale.audio" target="_blank">FUNKWHALE</a> \u00B7
+    <a href="https://nostr.com" target="_blank">NOSTR</a> ·
+    <a href="https://joinmastodon.org" target="_blank">MASTODON</a> ·
+    <a href="https://joinpeertube.org" target="_blank">PEERTUBE</a> ·
+    <a href="https://funkwhale.audio" target="_blank">FUNKWHALE</a> ·
     <a href="https://signal.org" target="_blank">SIGNAL</a>
   </div>
   <div id="bottom-nav">
-    <button class="bnav active" id="bnav-signal" onclick="switchSec('signal')"><span class="bicon">\u{1F4E1}</span></button>
-    <button class="bnav film-nav" id="bnav-film" onclick="switchSec('film')"><span class="bicon">\u{1F3AC}</span></button>
-    <button class="bnav forum-nav" id="bnav-forum" onclick="switchSec('forum')"><span class="bicon">\u{1F3DB}\uFE0F</span></button>
-    <button class="bnav post-nav" onclick="openUpload()"><span class="bicon">\uFF0B</span></button>
-    <button class="bnav music-nav" id="bnav-music" onclick="switchSec('music')"><span class="bicon">\u{1F3B5}</span></button>
-    <button class="bnav shop-nav" id="bnav-shop" onclick="switchSec('shop')"><span class="bicon">\u{1F6CD}\uFE0F</span></button>
-    <button class="bnav dm-nav" id="bnav-dm" onclick="switchSec('dm')"><span class="bicon">\u{1F4AC}</span></button>
+    <button class="bnav active" id="bnav-signal" onclick="switchSec('signal')"><span class="bicon">📡</span></button>
+    <button class="bnav film-nav" id="bnav-film" onclick="switchSec('film')"><span class="bicon">🎬</span></button>
+    <button class="bnav forum-nav" id="bnav-forum" onclick="switchSec('forum')"><span class="bicon">🏛️</span></button>
+    <button class="bnav post-nav" onclick="openUpload()"><span class="bicon">＋</span></button>
+    <button class="bnav music-nav" id="bnav-music" onclick="switchSec('music')"><span class="bicon">🎵</span></button>
+    <button class="bnav shop-nav" id="bnav-shop" onclick="switchSec('shop')"><span class="bicon">🛍️</span></button>
+    <button class="bnav dm-nav" id="bnav-dm" onclick="switchSec('dm')"><span class="bicon">💬</span></button>
   </div>
-  <button class="forum-new-btn" id="forum-fab" onclick="openForumModal()">\uFF0B</button>
-  <button class="shop-sell-btn" id="shop-fab" onclick="openSellModal()">\uFF0B</button>
+  <button class="forum-new-btn" id="forum-fab" onclick="openForumModal()">＋</button>
+  <button class="shop-sell-btn" id="shop-fab" onclick="openSellModal()">＋</button>
   <!-- Funkwhale Audio Player -->
   <div id="fw-player">
-    <button class="fw-player-btn" id="fw-play-btn" onclick="toggleFwPlay()">\u25B6</button>
+    <button class="fw-player-btn" id="fw-play-btn" onclick="toggleFwPlay()">▶</button>
     <div class="fw-player-info"><div class="fw-player-title" id="fw-now-playing">No track</div></div>
     <audio id="fw-audio"></audio>
   </div>
   <div id="comments-drawer">
     <div class="drawer-bar" onclick="closeComments()">
-      <span class="drawer-bar-title">\u{1F4AC} REPLIES</span>
-      <button class="drawer-bar-close">\u2715</button>
+      <span class="drawer-bar-title">💬 REPLIES</span>
+      <button class="drawer-bar-close">✕</button>
     </div>
     <div id="cmt-list"></div>
     <div id="cmt-input-bar">
@@ -371,32 +371,32 @@
   <div id="upload-modal">
     <div class="upload-sheet">
       <div class="up-head">
-        <span class="up-title" id="up-title">\u2B06 UPLOAD</span>
-        <button class="up-close" onclick="closeUpload()">\u2715</button>
+        <span class="up-title" id="up-title">⬆ UPLOAD</span>
+        <button class="up-close" onclick="closeUpload()">✕</button>
       </div>
       <div class="up-cats">
-        <button class="up-cat signal sel" onclick="selCat(this,'signal')">\u{1F4E1}</button>
-        <button class="up-cat film" onclick="selCat(this,'film')">\u{1F3AC}</button>
-        <button class="up-cat music" onclick="selCat(this,'music')">\u{1F3B5}</button>
+        <button class="up-cat signal sel" onclick="selCat(this,'signal')">📡</button>
+        <button class="up-cat film" onclick="selCat(this,'film')">🎬</button>
+        <button class="up-cat music" onclick="selCat(this,'music')">🎵</button>
       </div>
       <div class="up-body">
-        <div class="up-disc film" id="disc-film">\u{1F3AC} <strong>INDIE FILM CHANNEL</strong><br>Upload only your own content. Also streams from PeerTube federation. Powered by PeerTube API.</div>
-        <div class="up-disc music" id="disc-music">\u{1F3B5} <strong>UNDERGROUND MUSIC</strong><br>Original music only. Also streams from Funkwhale federation. Powered by Funkwhale API.</div>
+        <div class="up-disc film" id="disc-film">🎬 <strong>INDIE FILM CHANNEL</strong><br>Upload only your own content. Also streams from PeerTube federation. Powered by PeerTube API.</div>
+        <div class="up-disc music" id="disc-music">🎵 <strong>UNDERGROUND MUSIC</strong><br>Original music only. Also streams from Funkwhale federation. Powered by Funkwhale API.</div>
         <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
-          <div class="dz-icon">\u{1F4F9}</div>
+          <div class="dz-icon">📹</div>
           <strong style="font-size:0.82em">DROP VIDEO HERE</strong>
-          <p>or click to select \u00B7 MP4, MOV \u00B7 max 500MB</p>
+          <p>or click to select · MP4, MOV · max 500MB</p>
         </div>
         <input type="file" id="file-input" accept="video/*">
         <div class="prev-wrap" id="prev-wrap"><video id="prev-video" controls muted></video></div>
         <div class="field"><label>Title / Caption</label><input type="text" id="up-caption" placeholder="What's happening?"></div>
         <div class="film-fields" id="film-fields">
-          <div class="field"><label>Film Title</label><input type="text" id="up-film-title" placeholder="e.g. 'Dead Night' \u2014 short film 2024"></div>
+          <div class="field"><label>Film Title</label><input type="text" id="up-film-title" placeholder="e.g. 'Dead Night' — short film 2024"></div>
           <div class="field"><label>Genre</label><input type="text" id="up-film-genre" placeholder="documentary / noir / experimental..."></div>
           <div class="field"><label>Year</label><input type="text" id="up-film-year" placeholder="2024"></div>
         </div>
         <div class="music-fields" id="music-fields">
-          <div class="field"><label>Track Title</label><input type="text" id="up-music-title" placeholder="e.g. 'Signals' \u2014 single 2024"></div>
+          <div class="field"><label>Track Title</label><input type="text" id="up-music-title" placeholder="e.g. 'Signals' — single 2024"></div>
           <div class="field"><label>Genre / Style</label><input type="text" id="up-music-genre" placeholder="rap / ambient / punk / jazz..."></div>
         </div>
         <div class="field"><label>Tags (space separated)</label><input type="text" id="up-tags" placeholder="evidence underground indie"></div>
@@ -408,7 +408,7 @@
   </div>
   <div id="zap-modal">
     <div class="zap-sheet">
-      <div class="zap-title">\u26A1 SEND SATS</div>
+      <div class="zap-title">⚡ SEND SATS</div>
       <div class="sats-row">
         <button class="sat-btn" onclick="setSats(21,this)">21</button>
         <button class="sat-btn" onclick="setSats(100,this)">100</button>
@@ -418,15 +418,15 @@
       </div>
       <input class="zap-input" type="number" id="zap-amount" placeholder="Custom amount (sats)">
       <input class="zap-input" type="text" id="zap-comment" placeholder="Comment (optional)" style="margin-bottom:14px">
-      <button class="btn-zap" onclick="sendZap()">\u26A1 ZAP</button>
+      <button class="btn-zap" onclick="sendZap()">⚡ ZAP</button>
       <button class="zap-cancel" onclick="closeZap()">CANCEL</button>
     </div>
   </div>
   <div id="forum-modal">
     <div class="forum-sheet">
       <div class="forum-sheet-head">
-        <span class="forum-sheet-title">\u{1F3DB}\uFE0F NEW DISCUSSION</span>
-        <button class="forum-sheet-close" onclick="closeForumModal()">\u2715</button>
+        <span class="forum-sheet-title">🏛️ NEW DISCUSSION</span>
+        <button class="forum-sheet-close" onclick="closeForumModal()">✕</button>
       </div>
       <div class="forum-field"><label>Title</label><input type="text" id="forum-title" placeholder="Discussion topic..."></div>
       <div class="forum-field"><label>Body</label><textarea id="forum-body" rows="6" placeholder="Share your thoughts..."></textarea></div>
@@ -437,11 +437,11 @@
   <div id="sell-modal">
     <div class="sell-sheet">
       <div class="sell-sheet-head">
-        <span class="sell-sheet-title">\u{1F6CD}\uFE0F SELL ITEM</span>
-        <button class="sell-sheet-close" onclick="closeSellModal()">\u2715</button>
+        <span class="sell-sheet-title">🛍️ SELL ITEM</span>
+        <button class="sell-sheet-close" onclick="closeSellModal()">✕</button>
       </div>
       <div class="sell-img-zone" id="sell-img-zone" onclick="document.getElementById('sell-img-input').click()">
-        <div style="font-size:2em;margin-bottom:6px">\u{1F4F7}</div>
+        <div style="font-size:2em;margin-bottom:6px">📷</div>
         <strong style="font-size:0.75em">ADD PHOTOS</strong>
       </div>
       <input type="file" id="sell-img-input" accept="image/*" style="display:none">
@@ -454,7 +454,7 @@
   </div>
   <div id="token-modal">
     <div class="token-sheet">
-      <div class="token-title">\u{1F4B0} BUY M4TR1X TOKENS</div>
+      <div class="token-title">💰 BUY M4TR1X TOKENS</div>
       <div class="token-row">
         <button class="token-btn" onclick="selToken(100,this)">100</button>
         <button class="token-btn" onclick="selToken(500,this)">500</button>
@@ -463,16 +463,16 @@
         <button class="token-btn" onclick="selToken(10000,this)">10K</button>
       </div>
       <div class="token-info">1 M4TR1X TOKEN = 1 SAT (Lightning Network)</div>
-      <button class="btn-buy-token" onclick="buyTokens()">\u26A1 BUY WITH LIGHTNING</button>
+      <button class="btn-buy-token" onclick="buyTokens()">⚡ BUY WITH LIGHTNING</button>
       <button class="token-cancel" onclick="closeTokenModal()">CANCEL</button>
     </div>
   </div>
   <div id="dm-chat">
     <div class="dm-chat-head">
-      <button class="dm-chat-back" onclick="closeDmChat()">\u2190</button>
-      <div class="dm-av" id="dm-chat-av" style="width:28px;height:28px;font-size:0.7em">\u{1F464}</div>
+      <button class="dm-chat-back" onclick="closeDmChat()">←</button>
+      <div class="dm-av" id="dm-chat-av" style="width:28px;height:28px;font-size:0.7em">👤</div>
       <span class="dm-chat-name" id="dm-chat-name">...</span>
-      <span class="dm-chat-encrypt">\u{1F512} SIGNAL ENCRYPTED</span>
+      <span class="dm-chat-encrypt">🔒 SIGNAL ENCRYPTED</span>
     </div>
     <div class="dm-chat-msgs" id="dm-chat-msgs"></div>
     <div class="dm-chat-input">
