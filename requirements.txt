@@ -1,0 +1,22 @@
+# M4TR1X - Dipendenze Python
+# pip install -r requirements.txt
+
+# AI Detection
+torch>=2.0.0
+torchvision>=0.15.0
+opencv-python>=4.8.0
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# API Server
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+pydantic>=2.0.0
+
+# ONNX Export (mobile/browser)
+onnx>=1.14.0
+onnxruntime>=1.16.0
+
+# Crypto
+cryptography>=41.0.0
