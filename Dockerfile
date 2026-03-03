@@ -15,12 +15,12 @@ COPY . .
 # Create required directories
 RUN mkdir -p uploads models
 
-# Copy environment template (override at runtime with --env-file)
+# Copy environment template (override at runtime with --env-file .env)
 COPY .env.example .env
 
 EXPOSE 8080
 
-# Environment defaults (can be overridden at runtime)
+# Runtime environment defaults (override via --env or --env-file)
 ENV PORT=8080 \
     DB_PATH=m4tr1x.db \
     MAX_FILE_SIZE_MB=100 \
